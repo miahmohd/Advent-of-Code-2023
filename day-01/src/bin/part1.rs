@@ -7,15 +7,13 @@ fn main() {
 }
 
 fn run(s: &str) -> u32 {
-    let mut result = 0;
-    for line in s.lines() {
-        let digits: Vec<u32> = line
-            .chars()
-            .filter_map(|c| c.to_digit(10))
-            .collect();
-
-        result += digits.first().unwrap() * 10 + digits.last().unwrap();
-    }
+    let result = s
+        .lines()
+        .map(|l| {
+            let digits: Vec<u32> = l.chars().filter_map(|c| c.to_digit(10)).collect();
+            digits.first().unwrap() * 10 + digits.last().unwrap()
+        })
+        .sum();
 
     return result;
 }

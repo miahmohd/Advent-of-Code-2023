@@ -11,15 +11,13 @@ fn main() {
 }
 
 fn run(s: &str) -> u32 {
-    let mut result = 0;
-
-    for line in s.lines() {
-        let digits = find_digit(&line, Vec::new());
-
-        if let (Some(d), Some(u)) = (digits.first(), digits.last()) {
-            result += d * 10 + u;
-        }
-    }
+    let result = s
+        .lines()
+        .map(|l| {
+            let digits = find_digit(&l, Vec::new());
+            digits.first().unwrap() * 10 + digits.last().unwrap()
+        })
+        .sum();
 
     return result;
 }
