@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, ops::Add};
+use std::collections::HashSet;
 
 fn main() {
     let res = part1(include_str!("./input1"));
@@ -13,31 +13,23 @@ fn part1(s: &str) -> i32 {
         .map(|l| {
             let (_, numbers) = l.split_once(':').unwrap();
             let (win_n, my_n) = numbers.split_once('|').unwrap();
-            let win_n: Vec<i32> = win_n
+            let win_n: HashSet<i32> = win_n
                 .trim()
                 .split_ascii_whitespace()
                 .map(|s| s.parse().expect("Should be i32"))
                 .collect();
 
-            let my_n: Vec<i32> = my_n
+            let my_n: HashSet<i32> = my_n
                 .trim()
                 .split_ascii_whitespace()
                 .map(|s| s.parse().expect("Should be i32"))
                 .collect();
 
-            // println!("win {:?}\nmy  {:?}", win_n, my_n);
-
-            let matches = my_n
-                .iter()
-                .map(|n| match win_n.contains(n) {
-                    true => 1,
-                    false => 0,
-                })
-                .sum();
+            let matches = win_n.intersection(&my_n).count();
 
             // println!("Matches: {}", matches);
 
-            2_i32.pow(matches) / 2
+            2_i32.pow(matches as u32) / 2
             //
         })
         .sum()
@@ -65,29 +57,19 @@ fn part2(s: &str) -> i32 {
                 .expect("Should be number");
 
             let (win_n, my_n) = numbers.split_once('|').unwrap();
-            let win_n: Vec<i32> = win_n
+            let win_n: HashSet<i32> = win_n
                 .trim()
                 .split_ascii_whitespace()
                 .map(|s| s.parse().expect("Should be i32"))
                 .collect();
 
-            let my_n: Vec<i32> = my_n
+            let my_n: HashSet<i32> = my_n
                 .trim()
                 .split_ascii_whitespace()
                 .map(|s| s.parse().expect("Should be i32"))
                 .collect();
 
-            // println!("win {:?}\nmy  {:?}", win_n, my_n);
-
-            let matches = my_n
-                .iter()
-                .map(|n| match win_n.contains(n) {
-                    true => 1,
-                    false => 0,
-                })
-                .sum();
-
-            // println!("Matches: {}", matches);
+            let matches = win_n.intersection(&my_n).count();
 
             Card {
                 n: card_n,
@@ -104,7 +86,7 @@ fn part2(s: &str) -> i32 {
         for _ in 0..curr.copies {
             for j in 0..curr.matches {
                 // println!("card {} inc {}", curr.n, i + 1 + j + 1);
-                cards[i + j + 1].copies += 1;
+                cards[curr.n + j].copies += 1;
             }
         }
     }
