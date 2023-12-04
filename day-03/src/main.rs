@@ -109,12 +109,6 @@ fn part1(s: &str) -> i32 {
     parts.iter().sum()
 }
 
-#[derive(Debug, Default)]
-struct GearPart {
-    part: String,
-    sym_pos: (usize, usize),
-}
-
 fn part2(s: &str) -> i32 {
     let lines: Vec<&str> = s.lines().collect();
 
@@ -122,6 +116,7 @@ fn part2(s: &str) -> i32 {
 
     for i in 0..lines.len() {
         //
+
         let middle = lines.get(i).unwrap();
         let top = if i == 0 { None } else { lines.get(i - 1) };
         let bottom = if i == lines.len() - 1 {
@@ -269,15 +264,15 @@ fn part2(s: &str) -> i32 {
         }
     }
 
-    println!(
-        "Parts key ({}) {:?}",
-        gear_parts.keys().len(),
-        gear_parts.keys().collect::<Vec<_>>()
-    );
-    println!();
-    println!();
-    println!();
-    println!("Parts val {:?}", gear_parts.values().collect::<Vec<_>>());
+    // println!(
+    //     "Parts key ({}) {:?}",
+    //     gear_parts.keys().len(),
+    //     gear_parts.keys().collect::<Vec<_>>()
+    // );
+    // println!();
+    // println!();
+    // println!();
+    // println!("Parts val {:?}", gear_parts.values().collect::<Vec<_>>());
 
     gear_parts
         .values()
